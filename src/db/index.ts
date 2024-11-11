@@ -37,3 +37,19 @@ export async function getMobilityDataByTimestamp(timestamp: string) {
 
   return result;
 }
+
+export async function getWeatherByTimestamp(timestamp: string) {
+  const result = await db
+    .select({
+      conditions: urbanTransportData.weatherConditions,
+      temperature: urbanTransportData.temperature,
+      humidity: urbanTransportData.humidity,
+    })
+    .from(urbanTransportData)
+    .where(
+      sql`${urbanTransportData.timestamp}::timestamp = 
+          date_trunc('hour', ${timestamp}::timestamp)`
+    )
+    .limit(1);
+  return result[0];
+}
