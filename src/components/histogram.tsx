@@ -59,16 +59,24 @@ const Histogram = () => {
     },
     pedestrians: {
       label: "Pedestrians",
-      color: "hsl(var(--chart-4))",
+      color: "hsl(var(--chart-3))",
     },
   } satisfies ChartConfig;
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Card className="flex flex-col">
+        <CardContent>Loading...</CardContent>
+      </Card>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <Card className="flex flex-col">
+        <CardContent>{error}</CardContent>
+      </Card>
+    );
   }
 
   return (
