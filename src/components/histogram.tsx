@@ -11,6 +11,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { formatTimestamp } from "@/lib/utils";
 
 interface TransportData {
   timestamp: string;
@@ -26,10 +27,7 @@ const Histogram = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const timestamp = new Date()
-      .toISOString()
-      .replace("T", " ")
-      .replace(/\.\d+Z$/, "+00");
+    const timestamp = formatTimestamp(new Date().toISOString());
 
     fetch(`/api/mobility-data?timestamp=${encodeURIComponent(timestamp)}`)
       .then((res) => res.json())

@@ -11,3 +11,7 @@ export function isValidTimestamp(timestamp: string): boolean {
   const date = new Date(timestamp);
   return date.toString() !== "Invalid Date";
 }
+
+export function formatTimestamp(timestamp: string): string {
+  return timestamp.replace("T", " ").replace(/\.\d+Z$/, "+00");
+}
