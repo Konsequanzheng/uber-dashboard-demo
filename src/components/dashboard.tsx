@@ -2,6 +2,7 @@ import React from "react";
 import Histogram from "./histogram";
 import MobilityPieChart from "./piechart";
 import Weather from "./weather";
+import PublicTransportDelay from "./publicTransportDelay";
 
 const Dashboard = () => {
   return (
@@ -14,6 +15,9 @@ const Dashboard = () => {
       </div>
       <div className="w-[500px]">
         <Weather />
+      </div>
+      <div className="w-[500px]">
+        <PublicTransportDelay />
       </div>
     </div>
   );

@@ -53,3 +53,17 @@ export async function getWeatherByTimestamp(timestamp: string) {
     .limit(1);
   return result[0];
 }
+
+export async function getPublicTransportDelayByTimestamp(timestamp: string) {
+  const result = await db
+    .select({
+      delay: urbanTransportData.publicTransportDelay,
+    })
+    .from(urbanTransportData)
+    .where(
+      sql`${urbanTransportData.timestamp}::timestamp = 
+          date_trunc('hour', ${timestamp}::timestamp)`
+    )
+    .limit(1);
+  return result[0];
+}
