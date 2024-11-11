@@ -15,7 +15,14 @@ export function Header() {
             <Github className="h-6 w-6" />
           </Link>
           <Link
-            href="https://quan.codes/"
+            href="https://linkedin.com/in/q-zheng"
+            target="_blank"
+            className="hover:text-muted-foreground transition-colors"
+          >
+            <Linkedin className="h-6 w-6" />
+          </Link>
+          <Link
+            href="https://quan.codes"
             target="_blank"
             className="hover:text-muted-foreground transition-colors"
           >
