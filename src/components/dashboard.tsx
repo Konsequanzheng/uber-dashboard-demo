@@ -7,20 +7,20 @@ import NextEvent from "./nextEvent";
 
 const Dashboard = () => {
   return (
-    <div>
-      <div className="w-[500px]">
+    <div className="grid grid-cols-12 gap-4 w-full grid-rows-6 p-4 max-w-[1100px]">
+      <div className="col-span-12 md:col-span-6 row-span-3">
         <Histogram />
       </div>
-      <div className="w-[500px]">
-        <MobilityPieChart />
-      </div>
-      <div className="w-[500px]">
+      <div className="col-span-12 md:col-span-6 row-span-2">
         <Weather />
       </div>
-      <div className="w-[500px]">
+      <div className="col-span-12 md:col-span-6 row-span-2">
         <PublicTransportDelay />
       </div>
-      <div className="w-[500px]">
+      <div className="col-span-12 md:col-span-6 row-span-3">
+        <MobilityPieChart />
+      </div>
+      <div className="col-span-12 md:col-span-6 row-span-2">
         <NextEvent />
       </div>
     </div>

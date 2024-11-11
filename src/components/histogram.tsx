@@ -84,12 +84,12 @@ const Histogram = () => {
   }
 
   return (
-    <Card>
+    <Card className="h-full flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Urban Mobility Overview</CardTitle>
         <CardDescription>Last 5 Hours</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-full flex flex-col justify-center">
         <ChartContainer config={chartConfig}>
           <BarChart data={data}>
             <CartesianGrid vertical={false} />

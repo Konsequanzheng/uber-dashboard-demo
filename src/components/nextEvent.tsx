@@ -50,11 +50,11 @@ const NextEvent = () => {
   }
 
   return (
-    <Card>
+    <Card className="h-full flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Current Event</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-full flex flex-col justify-center items-center">
         <p className="text-6xl">
           {event?.timestamp === timestamp ? event?.event : "None"}
         </p>

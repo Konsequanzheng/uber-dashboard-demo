@@ -54,12 +54,12 @@ const PublicTransportDelay = () => {
     );
 
   return (
-    <Card>
+    <Card className="h-full flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Average Public Transport Delay</CardTitle>
         <CardDescription>Past hour</CardDescription>
       </CardHeader>
-      <CardContent className="flex justify-center items-center">
+      <CardContent className="flex justify-center items-center h-full">
         <p className={`text-7xl ${getDelayColor(delay ?? 0)}`}>
           {Math.trunc(delay ?? 0)}
           <span className="text-2xl"> minutes</span>

@@ -65,11 +65,11 @@ const Weather = () => {
   }
 
   return (
-    <Card>
+    <Card className="h-full flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Current Weather</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-row justify-center items-center gap-8">
+      <CardContent className="flex flex-row justify-center items-center gap-8 h-full">
         <div className="flex flex-col items-center">
           <span className="text-7xl">
             {weather?.conditions ? weatherEmojis[weather.conditions] : ""}
