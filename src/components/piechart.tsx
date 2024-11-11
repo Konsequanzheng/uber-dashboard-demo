@@ -17,6 +17,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { formatTimestamp } from "@/lib/utils";
+import { useEffect } from "react";
 
 interface MobilityData {
   mode: string;
@@ -45,9 +46,10 @@ const chartConfig = {
 export default function MobilityPieChart() {
   const [data, setData] = React.useState<MobilityData[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [status, setStatus] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timestamp = formatTimestamp(new Date().toISOString());
 
     fetch(`/api/mobility-data?timestamp=${encodeURIComponent(timestamp)}`)
@@ -85,6 +87,16 @@ export default function MobilityPieChart() {
     return data.reduce((acc, curr) => acc + curr.count, 0);
   }, [data]);
 
+  useEffect(() => {
+    if (totalCount > 5000) {
+      setStatus("Busy");
+    } else if (totalCount > 2000) {
+      setStatus("Moderate");
+    } else {
+      setStatus("Quiet");
+    }
+  }, [totalCount]);
+
   if (loading) {
     return (
       <Card className="flex flex-col">
@@ -107,10 +119,10 @@ export default function MobilityPieChart() {
         <CardTitle>Urban Mobility Distribution</CardTitle>
         <CardDescription>Last Hour</CardDescription>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex flex-row items-center pb-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="aspect-square min-h-[250px]"
         >
           <PieChart>
             <ChartTooltip
@@ -156,6 +168,20 @@ export default function MobilityPieChart() {
             </Pie>
           </PieChart>
         </ChartContainer>
+        <div className="flex flex-col w-full ">
+          <div className="text-md text-muted-foreground">Status:</div>
+          <div
+            className={`text-3xl font-bold ${
+              status === "Busy"
+                ? "text-red-500"
+                : status === "Moderate"
+                ? "text-yellow-500"
+                : "text-green-500"
+            }`}
+          >
+            {status}
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
