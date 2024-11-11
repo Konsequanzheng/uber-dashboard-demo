@@ -3,7 +3,7 @@ import Histogram from "./histogram";
 import MobilityPieChart from "./piechart";
 import Weather from "./weather";
 import PublicTransportDelay from "./publicTransportDelay";
-import NextEvent from "./nextEvent";
+import CurrentEvent from "./currentEvent";
 
 const Dashboard = () => {
   return (
@@ -21,7 +21,7 @@ const Dashboard = () => {
         <MobilityPieChart />
       </div>
       <div className="col-span-12 md:col-span-6 row-span-2">
-        <NextEvent />
+        <CurrentEvent />
       </div>
     </div>
   );

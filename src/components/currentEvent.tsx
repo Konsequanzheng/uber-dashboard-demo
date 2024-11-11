@@ -15,7 +15,7 @@ type EventData = {
   event: string;
 };
 
-const NextEvent = () => {
+const CurrentEvent = () => {
   const [event, setEvent] = useState<EventData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -70,4 +70,4 @@ const NextEvent = () => {
   );
 };
 
-export default NextEvent;
+export default CurrentEvent;
