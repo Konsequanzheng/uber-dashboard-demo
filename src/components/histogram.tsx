@@ -10,7 +10,13 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { formatTimestamp } from "@/lib/utils";
 
 interface TransportData {
@@ -35,7 +41,7 @@ const Histogram = () => {
         // Format timestamp to show only hours
         const formattedData = data.map((item: TransportData) => ({
           ...item,
-          hour: new Date(item.timestamp).getHours(),
+          hour: new Date(item.timestamp).getHours() - 1, // Subtract 1 because the data is from the previous hour
         }));
         setData(formattedData);
         setLoading(false);
@@ -80,7 +86,8 @@ const Histogram = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Urban Mobility Overview (last 5 hours)</CardTitle>
+        <CardTitle>Urban Mobility Overview</CardTitle>
+        <CardDescription>Last 5 Hours</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
