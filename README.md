@@ -3,7 +3,11 @@
 This is a demo dashboard for Uber built with React/Next.js, TypeScript, Shadcn, and Tailwind CSS, with data hosted on Supabase.
 It utilizes the synthetic [Urban Mobility Dataset](https://www.kaggle.com/datasets/arnavsmayan/urban-mobility-dataset) from Kaggle and updates every hour to show the next hour of data.
 
-Disclaimer: Since the data is synthetic, it might not always make sense. For example, the weather might be snowy at 30°C.
+You can find a live demo [here](https://uber-demo.quan.codes/).
+
+## Disclaimer
+
+Since the data is synthetic, it might not always make sense. For example, the weather might be snowy at 30°C.
 However, I hope that this doesn't detract from the overall showcase!
 
 ## TODOS:
