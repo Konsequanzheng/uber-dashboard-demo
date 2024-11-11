@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Bar, BarChart, XAxis, CartesianGrid } from "recharts";
+import { Bar, BarChart, XAxis, CartesianGrid, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -92,6 +92,12 @@ const Histogram = () => {
               tickMargin={10}
               axisLine={false}
               tickFormatter={(value) => `${value}:00`}
+            />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `${value}`}
+              width={30}
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <ChartLegend content={<ChartLegendContent />} />
