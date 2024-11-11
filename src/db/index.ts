@@ -2,7 +2,7 @@ import { config } from "dotenv";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { urbanTransportData } from "./migrations/schema";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, ne, sql } from "drizzle-orm";
 
 config({ path: ".env" });
 
@@ -65,5 +65,23 @@ export async function getPublicTransportDelayByTimestamp(timestamp: string) {
           date_trunc('hour', ${timestamp}::timestamp)`
     )
     .limit(1);
+  return result[0];
+}
+
+export async function getNextEvent(timestamp: string) {
+  const result = await db
+    .select({
+      timestamp: urbanTransportData.timestamp,
+      event: urbanTransportData.event,
+    })
+    .from(urbanTransportData)
+    .where(
+      and(
+        sql`${urbanTransportData.timestamp}::timestamp > ${timestamp}::timestamp`,
+        ne(urbanTransportData.event, "None")
+      )
+    )
+    .limit(1);
+
   return result[0];
 }
