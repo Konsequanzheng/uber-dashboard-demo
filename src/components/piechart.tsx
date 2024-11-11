@@ -115,7 +115,7 @@ export default function MobilityPieChart() {
 
   return (
     <Card className="flex flex-col">
-      <CardHeader className="items-center pb-0">
+      <CardHeader className="items-start pb-0">
         <CardTitle>Urban Mobility Distribution</CardTitle>
         <CardDescription>Last Hour</CardDescription>
       </CardHeader>
