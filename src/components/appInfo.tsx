@@ -23,7 +23,7 @@ const AppInfo = () => {
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerContent className="flex flex-col items-center">
-        <DrawerHeader className="w-[500px]">
+        <DrawerHeader className="max-w-[500px]">
           <DrawerTitle>Hey there!</DrawerTitle>
           <DrawerDescription>
             This is Quan, I built this demo on Nov 11th 2024 for my front-end
