@@ -15,6 +15,6 @@ However, I hope that this doesn't detract from the overall showcase!
 - [x] Add modal explaining the app on page open
 - [x] Add buttons to go back/forward in time
 - [x] Optimize queries (use only one query for all data)
-- [ ] Improve chart loading state (reduce pop-in using suspense)
+- [x] Improve chart loading state (reduce pop-in using suspense)
 - [ ] Fix data outliers (Snow at 30°C, etc.)
 - [ ] Get an interview with Uber? ;)
