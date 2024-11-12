@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { formatTimestamp } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { useTime } from "@/contexts/TimeContext";
 
 type WeatherData = {
   temperature: number;
@@ -21,22 +22,21 @@ const Weather = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(new Date().toISOString());
+    const timestamp = formatTimestamp(currentTime.toISOString());
     setIsLoading(true);
     fetch(`/api/weather?timestamp=${encodeURIComponent(timestamp)}`)
       .then((res) => res.json())
       .then((data) => {
         setWeather(data);
-        setIsLoading(false);
       })
-      .catch((error) => {
-        console.error("Error fetching weather data:", error);
+      .catch(() => {
         setError("Failed to fetch weather data");
-        setIsLoading(false);
-      });
-  }, []);
+      })
+      .finally(() => setIsLoading(false));
+  }, [currentTime]);
 
   if (isLoading) {
     return (

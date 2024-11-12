@@ -9,14 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { useTime } from "@/contexts/TimeContext";
 
 const PublicTransportDelay = () => {
   const [delay, setDelay] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(new Date().toISOString());
+    const timestamp = formatTimestamp(currentTime.toISOString());
 
     fetch(
       `/api/public-transport-delay?timestamp=${encodeURIComponent(timestamp)}`
@@ -25,7 +27,7 @@ const PublicTransportDelay = () => {
       .then((data) => setDelay(data.delay))
       .catch(() => setError("Failed to fetch data"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [currentTime]);
 
   const getDelayColor = (delay: number) => {
     if (delay <= 5) return "text-green-500";

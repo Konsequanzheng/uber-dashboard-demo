@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/chart";
 import { formatTimestamp } from "@/lib/utils";
 import { useEffect } from "react";
+import { useTime } from "@/contexts/TimeContext";
 
 interface MobilityData {
   mode: string;
@@ -48,9 +49,10 @@ export default function MobilityPieChart() {
   const [loading, setLoading] = React.useState(true);
   const [status, setStatus] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(new Date().toISOString());
+    const timestamp = formatTimestamp(currentTime.toISOString());
 
     fetch(`/api/mobility-data?timestamp=${encodeURIComponent(timestamp)}`)
       .then((res) => res.json())
@@ -81,7 +83,7 @@ export default function MobilityPieChart() {
         setError("Failed to fetch data");
         setLoading(false);
       });
-  }, []);
+  }, [currentTime]);
 
   const totalCount = React.useMemo(() => {
     return data.reduce((acc, curr) => acc + curr.count, 0);

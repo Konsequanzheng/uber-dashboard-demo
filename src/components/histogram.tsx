@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { formatTimestamp } from "@/lib/utils";
+import { useTime } from "@/contexts/TimeContext";
 
 interface TransportData {
   timestamp: string;
@@ -31,9 +32,10 @@ const Histogram = () => {
   const [data, setData] = useState<TransportData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(new Date().toISOString());
+    const timestamp = formatTimestamp(currentTime.toISOString());
 
     fetch(`/api/mobility-data?timestamp=${encodeURIComponent(timestamp)}`)
       .then((res) => res.json())
@@ -50,7 +52,7 @@ const Histogram = () => {
         setError("Failed to fetch data");
         setLoading(false);
       });
-  }, []);
+  }, [currentTime]);
 
   const chartConfig = {
     publicTransport: {

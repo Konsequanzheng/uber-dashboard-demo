@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { formatTimestamp } from "@/lib/utils";
+import { useTime } from "@/contexts/TimeContext";
 
 type EventData = {
   timestamp: string;
@@ -20,9 +21,10 @@ const CurrentEvent = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timestamp, setTimestamp] = useState<string | null>(null);
+  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(new Date().toISOString());
+    const timestamp = formatTimestamp(currentTime.toISOString());
     fetch(`/api/next-event?timestamp=${encodeURIComponent(timestamp)}`)
       .then((res) => res.json())
       .then((data) => {
@@ -31,7 +33,7 @@ const CurrentEvent = () => {
       })
       .catch((error) => setError(error.message))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [currentTime]);
 
   if (isLoading) {
     return (
@@ -49,23 +51,27 @@ const CurrentEvent = () => {
     );
   }
 
+  // Compare timestamps accurate to the hour
+  const eventNow = event?.timestamp?.slice(0, -9) === timestamp?.slice(0, -9);
+
   return (
     <Card className="h-full flex flex-col justify-between">
       <CardHeader>
         <CardTitle>Current Event</CardTitle>
       </CardHeader>
       <CardContent className="h-full flex flex-col justify-center items-center">
-        <p className="text-6xl">
-          {/* comparison is done to the hour level */}
-          {event?.timestamp?.slice(0, -9) === timestamp?.slice(0, -9)
-            ? event?.event
-            : "None"}
-        </p>
+        <p className="text-6xl">{eventNow ? event?.event : "None"}</p>
       </CardContent>
+
       <CardFooter>
         <div className="flex flex-row">
           <p className="text-sm text-muted-foreground">
-            Next Event: {event?.event} at {event?.timestamp?.slice(0, -6)}
+            {eventNow
+              ? "Expect higher traffic"
+              : `Next Event: ${event?.event} at ${event?.timestamp?.slice(
+                  0,
+                  -6
+                )}`}
           </p>
         </div>
       </CardFooter>
