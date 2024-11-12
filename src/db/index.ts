@@ -42,8 +42,8 @@ export async function getDashboardData(timestamp: string) {
       .from(urbanTransportData)
       .where(
         sql`${urbanTransportData.timestamp}::timestamp BETWEEN 
-            ${timestamp}::timestamp - INTERVAL '5 hours' AND 
-            ${timestamp}::timestamp`
+            ${timestamp}::timestamp - INTERVAL '6 hours' AND 
+            ${timestamp}::timestamp - INTERVAL '1 hour'`
       )
       .orderBy(urbanTransportData.timestamp),
 

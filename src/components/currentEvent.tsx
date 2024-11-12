@@ -10,30 +10,26 @@ import {
 } from "@/components/ui/card";
 import { useDashboard } from "@/contexts/DashboardContext";
 import { useTime } from "@/contexts/TimeContext";
-import { formatTimestamp } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type EventData = {
   event: string;
-  timestamp: string;
+  timestamp: Date;
 };
 
 const CurrentEvent = () => {
   const { currentTime } = useTime();
   const { dashboardData, isLoading, error } = useDashboard();
   const [event, setEvent] = useState<EventData | null>(null);
-  const [formattedCurrentTime, setFormattedCurrentTime] = useState<
-    string | null
-  >(null);
 
   useEffect(() => {
-    const formattedTimestamp = formatTimestamp(currentTime.toISOString());
-    setFormattedCurrentTime(formattedTimestamp);
-  }, [currentTime]);
+    // Skip if timestamp is undefined
+    if (!dashboardData?.nextEvent?.timestamp) return;
 
-  useEffect(() => {
-    const eventData = dashboardData?.nextEvent;
-    if (!eventData) return;
+    const eventData = {
+      event: dashboardData?.nextEvent?.event,
+      timestamp: new Date(dashboardData.nextEvent.timestamp),
+    };
     setEvent(eventData);
   }, [dashboardData]);
 
@@ -66,7 +62,8 @@ const CurrentEvent = () => {
 
   // Compare timestamps accurate to the hour
   const eventNow =
-    event?.timestamp?.slice(0, -9) === formattedCurrentTime?.slice(0, -9);
+    event?.timestamp.toISOString().slice(0, 13) ===
+    currentTime.toISOString().slice(0, 13);
 
   return (
     <Card className="h-full flex flex-col justify-between">
@@ -82,10 +79,9 @@ const CurrentEvent = () => {
           <p className="text-sm text-muted-foreground">
             {eventNow
               ? "Expect higher traffic"
-              : `Next Event: ${event?.event} at ${event?.timestamp?.slice(
-                  0,
-                  -6
-                )}`}
+              : `Next Event: ${
+                  event?.event
+                } at ${event?.timestamp.toLocaleString()}`}
           </p>
         </div>
       </CardFooter>

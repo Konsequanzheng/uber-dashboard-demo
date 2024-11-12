@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar, BarChart, XAxis, CartesianGrid, YAxis } from "recharts";
 import {
   ChartConfig,
@@ -20,9 +20,26 @@ import {
 import { useDashboard } from "@/contexts/DashboardContext";
 import { Skeleton } from "@/components/ui/skeleton";
 
+interface MobilityData {
+  timestamp: string;
+  publicTransport: number;
+  traffic: number;
+  pedestrians: number;
+}
+
 const Histogram = () => {
   const { dashboardData, isLoading, error } = useDashboard();
-  const data = dashboardData?.historicalData;
+  const [data, setData] = useState<MobilityData[]>([]);
+
+  useEffect(() => {
+    const historicalData = dashboardData?.historicalData;
+    if (!historicalData) return;
+    const formattedData = historicalData.map((item: MobilityData) => ({
+      ...item,
+      hour: new Date(item.timestamp).getHours(),
+    }));
+    setData(formattedData);
+  }, [dashboardData]);
 
   const chartConfig = {
     publicTransport: {
