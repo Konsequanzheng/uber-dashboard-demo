@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { useDashboard } from "@/contexts/DashboardContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const PublicTransportDelay = () => {
   const { dashboardData, isLoading, error } = useDashboard();
@@ -28,21 +29,27 @@ const PublicTransportDelay = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="h-full flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Average Public Transport Delay</CardTitle>
-          <CardContent>Loading...</CardContent>
+          <CardDescription>Past hour</CardDescription>
         </CardHeader>
+        <CardContent className="flex justify-center items-center h-full">
+          <Skeleton className="h-24 w-48" />
+        </CardContent>
       </Card>
     );
   }
   if (error)
     return (
-      <Card>
+      <Card className="h-full flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Average Public Transport Delay</CardTitle>
-          <CardContent>{error}</CardContent>
+          <CardDescription>Past hour</CardDescription>
         </CardHeader>
+        <CardContent>
+          <p>{error}</p>
+        </CardContent>
       </Card>
     );
 

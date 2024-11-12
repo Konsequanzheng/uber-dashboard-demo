@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { useDashboard } from "@/contexts/DashboardContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Histogram = () => {
   const { dashboardData, isLoading, error } = useDashboard();
@@ -40,15 +41,25 @@ const Histogram = () => {
 
   if (isLoading) {
     return (
-      <Card className="flex flex-col">
-        <CardContent>Loading...</CardContent>
+      <Card className="h-full flex flex-col justify-between">
+        <CardHeader>
+          <CardTitle>Urban Mobility Overview</CardTitle>
+          <CardDescription>Last 5 Hours</CardDescription>
+        </CardHeader>
+        <CardContent className="h-full flex flex-col justify-center">
+          <Skeleton className="h-[250px] w-full" />
+        </CardContent>
       </Card>
     );
   }
 
   if (error) {
     return (
-      <Card className="flex flex-col">
+      <Card className="h-full flex flex-col justify-between">
+        <CardHeader>
+          <CardTitle>Urban Mobility Overview</CardTitle>
+          <CardDescription>Last 5 Hours</CardDescription>
+        </CardHeader>
         <CardContent>{error}</CardContent>
       </Card>
     );

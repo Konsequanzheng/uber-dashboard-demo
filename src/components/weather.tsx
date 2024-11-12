@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { useDashboard } from "@/contexts/DashboardContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type WeatherData = {
   temperature: number;
@@ -34,12 +35,19 @@ const Weather = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="h-full flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Current Weather</CardTitle>
         </CardHeader>
-        <CardContent>
-          <p>Loading weather data...</p>
+        <CardContent className="flex flex-row justify-center items-center gap-8 h-full">
+          <div className="flex flex-col items-center">
+            <Skeleton className="h-24 w-24 rounded-full" />
+            <Skeleton className="h-6 w-32 mt-2" />
+          </div>
+          <div className="flex flex-col items-center">
+            <Skeleton className="h-24 w-32" />
+            <Skeleton className="h-4 w-24 mt-2" />
+          </div>
         </CardContent>
       </Card>
     );
@@ -47,7 +55,7 @@ const Weather = () => {
 
   if (error) {
     return (
-      <Card>
+      <Card className="h-full flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Current Weather</CardTitle>
         </CardHeader>

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/chart";
 import { useEffect } from "react";
 import { useDashboard } from "@/contexts/DashboardContext";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface MobilityData {
   mode: string;
@@ -88,15 +89,29 @@ export default function MobilityPieChart() {
 
   if (isLoading) {
     return (
-      <Card className="flex flex-col">
-        <CardContent>Loading...</CardContent>
+      <Card className="h-full flex flex-col justify-between">
+        <CardHeader>
+          <CardTitle>Urban Mobility Distribution</CardTitle>
+          <CardDescription>Last Hour</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-row items-center h-full pb-0">
+          <Skeleton className="h-[200px] w-[200px] rounded-full" />
+          <div className="flex flex-col pl-4">
+            <Skeleton className="h-4 w-20 mb-2" />
+            <Skeleton className="h-8 w-32" />
+          </div>
+        </CardContent>
       </Card>
     );
   }
 
   if (error) {
     return (
-      <Card className="flex flex-col">
+      <Card className="h-full flex flex-col justify-between">
+        <CardHeader>
+          <CardTitle>Urban Mobility Distribution</CardTitle>
+          <CardDescription>Last Hour</CardDescription>
+        </CardHeader>
         <CardContent>{error}</CardContent>
       </Card>
     );
@@ -157,7 +172,7 @@ export default function MobilityPieChart() {
             </Pie>
           </PieChart>
         </ChartContainer>
-        <div className="flex flex-col w-full ">
+        <div className="flex flex-col ">
           <div className="text-md text-muted-foreground">Status:</div>
           <div
             className={`text-3xl font-bold ${

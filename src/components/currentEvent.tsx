@@ -11,6 +11,7 @@ import {
 import { useDashboard } from "@/contexts/DashboardContext";
 import { useTime } from "@/contexts/TimeContext";
 import { formatTimestamp } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type EventData = {
   event: string;
@@ -38,15 +39,26 @@ const CurrentEvent = () => {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardContent>Loading...</CardContent>
+      <Card className="h-full flex flex-col justify-between">
+        <CardHeader>
+          <CardTitle>Current Event</CardTitle>
+        </CardHeader>
+        <CardContent className="h-full flex flex-col justify-center items-center">
+          <Skeleton className="h-24 w-48" />
+        </CardContent>
+        <CardFooter>
+          <Skeleton className="h-4 w-[250px]" />
+        </CardFooter>
       </Card>
     );
   }
 
   if (error) {
     return (
-      <Card>
+      <Card className="h-full flex flex-col justify-between">
+        <CardHeader>
+          <CardTitle>Current Event</CardTitle>
+        </CardHeader>
         <CardContent>{error}</CardContent>
       </Card>
     );
