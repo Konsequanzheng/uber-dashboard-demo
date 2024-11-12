@@ -77,7 +77,7 @@ export async function getNextEvent(timestamp: string) {
     .from(urbanTransportData)
     .where(
       and(
-        sql`${urbanTransportData.timestamp}::timestamp > ${timestamp}::timestamp`,
+        sql`date_trunc('hour', ${urbanTransportData.timestamp}::timestamp) >= date_trunc('hour', ${timestamp}::timestamp)`,
         ne(urbanTransportData.event, "None")
       )
     )

@@ -56,7 +56,10 @@ const CurrentEvent = () => {
       </CardHeader>
       <CardContent className="h-full flex flex-col justify-center items-center">
         <p className="text-6xl">
-          {event?.timestamp === timestamp ? event?.event : "None"}
+          {/* comparison is done to the hour level */}
+          {event?.timestamp?.slice(0, -9) === timestamp?.slice(0, -9)
+            ? event?.event
+            : "None"}
         </p>
       </CardContent>
       <CardFooter>
