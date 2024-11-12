@@ -58,9 +58,9 @@ const AppInfo = () => {
           </DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <DrawerClose>
-            <Button variant="outline">Understood</Button>
-          </DrawerClose>
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
+            Understood
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
