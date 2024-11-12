@@ -46,7 +46,6 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const timestamp = formatTimestamp(currentTime.toISOString());
-    setIsLoading(true);
 
     fetch(`/api/dashboard-data?timestamp=${encodeURIComponent(timestamp)}`)
       .then((res) => res.json())
