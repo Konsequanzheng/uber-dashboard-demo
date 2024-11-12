@@ -4,6 +4,7 @@ import MobilityPieChart from "./piechart";
 import Weather from "./weather";
 import PublicTransportDelay from "./publicTransportDelay";
 import CurrentEvent from "./currentEvent";
+import AppInfo from "./appInfo";
 
 const Dashboard = () => {
   return (
@@ -23,6 +24,7 @@ const Dashboard = () => {
       <div className="col-span-12 md:col-span-6 row-span-2">
         <CurrentEvent />
       </div>
+      <AppInfo />
     </div>
   );
 };

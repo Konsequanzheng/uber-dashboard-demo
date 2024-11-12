@@ -12,7 +12,7 @@ However, I hope that this doesn't detract from the overall showcase!
 
 ## TODOS:
 
-- [ ] Add modal explaining the app page open
+- [ ] Add modal explaining the app on page open
 - [ ] Add buttons to go back/forward in time
 - [ ] Optimize queries (use only one query for all data)
 - [ ] Improve chart loading state (reduce pop-in)
