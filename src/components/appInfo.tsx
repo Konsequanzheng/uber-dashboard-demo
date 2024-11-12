@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
