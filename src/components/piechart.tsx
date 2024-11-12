@@ -16,9 +16,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { formatTimestamp } from "@/lib/utils";
 import { useEffect } from "react";
-import { useTime } from "@/contexts/TimeContext";
+import { useDashboard } from "@/contexts/DashboardContext";
 
 interface MobilityData {
   mode: string;
@@ -45,45 +44,33 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function MobilityPieChart() {
-  const [data, setData] = React.useState<MobilityData[]>([]);
-  const [loading, setLoading] = React.useState(true);
   const [status, setStatus] = React.useState<string | null>(null);
-  const [error, setError] = React.useState<string | null>(null);
-  const { currentTime } = useTime();
+  const [data, setData] = React.useState<MobilityData[]>([]);
+  const { dashboardData, isLoading, error } = useDashboard();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(currentTime.toISOString());
+    const latest = dashboardData?.currentHour;
+    if (!latest) return;
 
-    fetch(`/api/mobility-data?timestamp=${encodeURIComponent(timestamp)}`)
-      .then((res) => res.json())
-      .then((rawData) => {
-        // Take the latest data point
-        const latest = rawData[rawData.length - 1];
-        const formattedData = [
-          {
-            mode: "publicTransport",
-            count: latest.publicTransport,
-            fill: "var(--color-publicTransport)",
-          },
-          {
-            mode: "traffic",
-            count: latest.traffic,
-            fill: "var(--color-traffic)",
-          },
-          {
-            mode: "pedestrians",
-            count: latest.pedestrians,
-            fill: "var(--color-pedestrians)",
-          },
-        ];
-        setData(formattedData);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to fetch data");
-        setLoading(false);
-      });
-  }, [currentTime]);
+    const formattedData = [
+      {
+        mode: "publicTransport",
+        count: latest.publicTransport,
+        fill: "var(--color-publicTransport)",
+      },
+      {
+        mode: "traffic",
+        count: latest.traffic,
+        fill: "var(--color-traffic)",
+      },
+      {
+        mode: "pedestrians",
+        count: latest.pedestrians,
+        fill: "var(--color-pedestrians)",
+      },
+    ];
+    setData(formattedData);
+  }, [dashboardData]);
 
   const totalCount = React.useMemo(() => {
     return data.reduce((acc, curr) => acc + curr.count, 0);
@@ -99,7 +86,7 @@ export default function MobilityPieChart() {
     }
   }, [totalCount]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Card className="flex flex-col">
         <CardContent>Loading...</CardContent>

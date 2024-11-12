@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/header";
 import { TimeProvider } from "@/contexts/TimeContext";
+import { DashboardProvider } from "@/contexts/DashboardContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,8 +32,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
         <TimeProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
+          <DashboardProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+          </DashboardProvider>
         </TimeProvider>
       </body>
     </html>

@@ -1,6 +1,5 @@
 "use client";
 
-import { formatTimestamp } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import {
   Card,
@@ -9,25 +8,17 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { useTime } from "@/contexts/TimeContext";
+import { useDashboard } from "@/contexts/DashboardContext";
 
 const PublicTransportDelay = () => {
+  const { dashboardData, isLoading, error } = useDashboard();
   const [delay, setDelay] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(currentTime.toISOString());
-
-    fetch(
-      `/api/public-transport-delay?timestamp=${encodeURIComponent(timestamp)}`
-    )
-      .then((res) => res.json())
-      .then((data) => setDelay(data.delay))
-      .catch(() => setError("Failed to fetch data"))
-      .finally(() => setLoading(false));
-  }, [currentTime]);
+    const latest = dashboardData?.currentHour;
+    if (!latest) return;
+    setDelay(latest.publicTransportDelay);
+  }, [dashboardData]);
 
   const getDelayColor = (delay: number) => {
     if (delay <= 5) return "text-green-500";
@@ -35,7 +26,7 @@ const PublicTransportDelay = () => {
     return "text-red-500";
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Card>
         <CardHeader>

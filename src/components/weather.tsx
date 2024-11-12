@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { formatTimestamp } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { useTime } from "@/contexts/TimeContext";
+import { useDashboard } from "@/contexts/DashboardContext";
 
 type WeatherData = {
   temperature: number;
@@ -19,24 +18,19 @@ const weatherEmojis: Record<string, string> = {
 };
 
 const Weather = () => {
+  const { dashboardData, isLoading, error } = useDashboard();
   const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { currentTime } = useTime();
 
   useEffect(() => {
-    const timestamp = formatTimestamp(currentTime.toISOString());
-    setIsLoading(true);
-    fetch(`/api/weather?timestamp=${encodeURIComponent(timestamp)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setWeather(data);
-      })
-      .catch(() => {
-        setError("Failed to fetch weather data");
-      })
-      .finally(() => setIsLoading(false));
-  }, [currentTime]);
+    const latest = dashboardData?.currentHour;
+    if (!latest) return;
+    const weatherData: WeatherData = {
+      temperature: latest.temperature,
+      humidity: latest.humidity,
+      conditions: latest.weatherConditions,
+    };
+    setWeather(weatherData);
+  }, [dashboardData]);
 
   if (isLoading) {
     return (

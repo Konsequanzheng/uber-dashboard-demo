@@ -8,32 +8,33 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatTimestamp } from "@/lib/utils";
+import { useDashboard } from "@/contexts/DashboardContext";
 import { useTime } from "@/contexts/TimeContext";
+import { formatTimestamp } from "@/lib/utils";
 
 type EventData = {
-  timestamp: string;
   event: string;
+  timestamp: string;
 };
 
 const CurrentEvent = () => {
-  const [event, setEvent] = useState<EventData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [timestamp, setTimestamp] = useState<string | null>(null);
   const { currentTime } = useTime();
+  const { dashboardData, isLoading, error } = useDashboard();
+  const [event, setEvent] = useState<EventData | null>(null);
+  const [formattedCurrentTime, setFormattedCurrentTime] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
-    const timestamp = formatTimestamp(currentTime.toISOString());
-    fetch(`/api/next-event?timestamp=${encodeURIComponent(timestamp)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setEvent(data);
-        setTimestamp(timestamp);
-      })
-      .catch((error) => setError(error.message))
-      .finally(() => setIsLoading(false));
+    const formattedTimestamp = formatTimestamp(currentTime.toISOString());
+    setFormattedCurrentTime(formattedTimestamp);
   }, [currentTime]);
+
+  useEffect(() => {
+    const eventData = dashboardData?.nextEvent;
+    if (!eventData) return;
+    setEvent(eventData);
+  }, [dashboardData]);
 
   if (isLoading) {
     return (
@@ -52,7 +53,8 @@ const CurrentEvent = () => {
   }
 
   // Compare timestamps accurate to the hour
-  const eventNow = event?.timestamp?.slice(0, -9) === timestamp?.slice(0, -9);
+  const eventNow =
+    event?.timestamp?.slice(0, -9) === formattedCurrentTime?.slice(0, -9);
 
   return (
     <Card className="h-full flex flex-col justify-between">

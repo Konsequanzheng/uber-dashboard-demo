@@ -1,4 +1,4 @@
-import { getWeatherByTimestamp } from "@/db";
+import { getDashboardData } from "@/db";
 import { NextRequest } from "next/server";
 import { isValidTimestamp } from "@/lib/utils";
 
@@ -11,12 +11,12 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const data = await getWeatherByTimestamp(timestamp);
+    const data = await getDashboardData(timestamp);
     return new Response(JSON.stringify(data), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error fetching weather data:", error);
-    return new Response("Error fetching weather data", { status: 500 });
+    console.error("Error fetching dashboard data:", error);
+    return new Response("Error fetching dashboard data", { status: 500 });
   }
 }

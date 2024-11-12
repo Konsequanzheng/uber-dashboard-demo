@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Bar, BarChart, XAxis, CartesianGrid, YAxis } from "recharts";
 import {
   ChartConfig,
@@ -17,42 +17,11 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { formatTimestamp } from "@/lib/utils";
-import { useTime } from "@/contexts/TimeContext";
-
-interface TransportData {
-  timestamp: string;
-  publicTransport: number;
-  traffic: number;
-  bikeSharing: number;
-  pedestrians: number;
-}
+import { useDashboard } from "@/contexts/DashboardContext";
 
 const Histogram = () => {
-  const [data, setData] = useState<TransportData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const { currentTime } = useTime();
-
-  useEffect(() => {
-    const timestamp = formatTimestamp(currentTime.toISOString());
-
-    fetch(`/api/mobility-data?timestamp=${encodeURIComponent(timestamp)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        // Format timestamp to show only hours
-        const formattedData = data.map((item: TransportData) => ({
-          ...item,
-          hour: new Date(item.timestamp).getHours() - 1, // Subtract 1 because the data is from the previous hour
-        }));
-        setData(formattedData);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to fetch data");
-        setLoading(false);
-      });
-  }, [currentTime]);
+  const { dashboardData, isLoading, error } = useDashboard();
+  const data = dashboardData?.historicalData;
 
   const chartConfig = {
     publicTransport: {
@@ -69,7 +38,7 @@ const Histogram = () => {
     },
   } satisfies ChartConfig;
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Card className="flex flex-col">
         <CardContent>Loading...</CardContent>
