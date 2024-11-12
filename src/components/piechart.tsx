@@ -94,7 +94,7 @@ export default function MobilityPieChart() {
           <CardTitle>Urban Mobility Distribution</CardTitle>
           <CardDescription>Last Hour</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-row items-center h-full pb-0">
+        <CardContent className="flex flex-col lg:flex-row items-center gap-4 lg:pb-0 h-full">
           <Skeleton className="h-[200px] w-[200px] rounded-full" />
           <div className="flex flex-col pl-4">
             <Skeleton className="h-4 w-20 mb-2" />
@@ -123,7 +123,7 @@ export default function MobilityPieChart() {
         <CardTitle>Urban Mobility Distribution</CardTitle>
         <CardDescription>Last Hour</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-row items-center pb-0 h-full">
+      <CardContent className="flex flex-col lg:flex-row items-center lg:pb-0 h-full">
         <ChartContainer
           config={chartConfig}
           className="aspect-square min-h-[250px]"

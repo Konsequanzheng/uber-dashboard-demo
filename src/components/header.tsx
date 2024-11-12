@@ -11,8 +11,8 @@ export function Header() {
   return (
     <header className="border-b">
       <div className="container flex h-16 items-center justify-between px-4">
-        <div className="text-2xl font-bold">Uber Dashboard Demo</div>
-        <div className="flex flex-row gap-8">
+        <div className="text-md md:text-2xl font-bold">Uber Dashboard Demo</div>
+        <div className="flex flex-row gap-2 md:gap-8">
           <div className="flex flex-row gap-2">
             <Button onClick={moveTimeBackward} variant="outline">
               -1h
@@ -21,7 +21,7 @@ export function Header() {
               +1h
             </Button>
           </div>
-          <nav className="flex items-center gap-4">
+          <nav className="flex items-center gap-2 md:gap-4">
             <Link
               href="https://github.com/Konsequanzheng/uber-dashboard-demo/"
               target="_blank"
