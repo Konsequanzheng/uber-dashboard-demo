@@ -5,6 +5,7 @@ import Weather from "./weather";
 import PublicTransportDelay from "./publicTransportDelay";
 import CurrentEvent from "./currentEvent";
 import AppInfo from "./appInfo";
+import Menubar from "./menubar";
 
 const Dashboard = () => {
   return (
@@ -25,6 +26,7 @@ const Dashboard = () => {
       <div className="col-span-12 md:col-span-6 row-span-2">
         <CurrentEvent />
       </div>
+      <Menubar />
       <AppInfo />
     </div>
   );
