@@ -3,7 +3,7 @@ import TimeButtons from "./timeButtons";
 
 const Menubar = () => {
   return (
-    <div className="opacity-50 hover:opacity-100 p-4 bg-background border border-border rounded-xl transition-opacity fixed bottom-10 left-1/2 transform -translate-x-1/2 flex flex-row gap-2 md:hidden">
+    <div className="opacity-75 active:opacity-100 p-4 bg-background border border-border rounded-xl transition-opacity fixed bottom-10 left-1/2 transform -translate-x-1/2 flex flex-row gap-2 md:hidden">
       <TimeButtons />
     </div>
   );
