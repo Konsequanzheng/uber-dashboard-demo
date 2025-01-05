@@ -3,12 +3,41 @@
 import Link from "next/link";
 import { Github, Globe, Linkedin } from "lucide-react";
 import TimeButtons from "./timeButtons";
+import { usePathname } from "next/navigation";
 
 export function Header() {
+  const pathname = usePathname();
+
+  const links = [
+    {
+      href: "/network-map",
+      name: "Network Map",
+    },
+    {
+      href: "/public-transit",
+      name: "Public Transit",
+    },
+  ];
+
   return (
     <header className="border-b">
       <div className="flex h-16 items-center justify-between px-4">
-        <div className="text-md md:text-2xl font-bold">Uber Dashboard Demo</div>
+        <div className="flex flex-row gap-4 items-center">
+          <div className="text-md md:text-2xl font-bold">
+            Uber Dashboard Demo
+          </div>
+          {links.map(({ href, name }) => {
+            return (
+              <Link
+                href={href}
+                key={href}
+                className={`${pathname == href && "underline font-semibold"}`}
+              >
+                {name}
+              </Link>
+            );
+          })}
+        </div>
         <div className="flex flex-row gap-2 md:gap-4">
           <TimeButtons className="hidden md:flex" />
           <nav className="flex items-center gap-2 md:gap-4">
