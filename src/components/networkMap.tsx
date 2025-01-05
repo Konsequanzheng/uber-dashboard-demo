@@ -73,7 +73,7 @@ const mapOptions = {
         ["nz", 80], // New Zealand
         ["pa", 75], // Panama
         ["pe", 65], // Peru
-        ["pl", 60], // Poland
+        ["pl", 120], // Poland
         ["pt", 85], // Portugal
         ["py", 70], // Paraguay
         ["qa", 55], // Qatar
