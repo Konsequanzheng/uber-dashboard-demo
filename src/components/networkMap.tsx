@@ -1,29 +1,50 @@
 "use client";
 
 import React, { useRef } from "react";
-import * as Highcharts from "highcharts";
+import * as Highcharts from "highcharts/highmaps";
 import HighchartsReact from "highcharts-react-official";
+import mapData from "../data/mapData";
 
-// The wrapper exports only a default component that at the same time is a
-// namespace for the related Props interface (HighchartsReact.Props) and
-// RefObject interface (HighchartsReact.RefObject). All other interfaces
-// like Options come from the Highcharts module itself.
-
-const options: Highcharts.Options = {
+const mapOptions = {
   title: {
-    text: "My chart",
+    text: "",
+  },
+  colorAxis: {
+    min: 0,
+    stops: [
+      [0, "#EFEFFF"],
+      [0.67, "#4444FF"],
+      [1, "#000022"],
+    ],
   },
   series: [
     {
-      type: "line",
-      data: [1, 2, 3],
+      mapData: mapData,
+      name: "Norway",
+      data: [
+        ["no-mr", 0],
+        ["no-st", 1],
+        ["no-ho", 2],
+        ["no-sf", 42],
+        ["no-va", 4],
+        ["no-of", 5],
+        ["no-nt", 6],
+        ["no-ro", 7],
+        ["no-bu", 8],
+        ["no-vf", 9],
+        ["no-fi", 10],
+        ["no-no", 11],
+        ["no-tr", 12],
+        ["no-ak", 13],
+        ["no-op", 14],
+        ["no-he", 15],
+        ["no-os", 16],
+        ["no-te", 17],
+        ["no-aa", 18],
+      ],
     },
   ],
 };
-
-// React supports function components as a simple way to write components that
-// only contain a render method without any state (the App component in this
-// example).
 
 const NetworkMap = (props: HighchartsReact.Props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
@@ -31,7 +52,8 @@ const NetworkMap = (props: HighchartsReact.Props) => {
   return (
     <HighchartsReact
       highcharts={Highcharts}
-      options={options}
+      constructorType={"mapChart"}
+      options={mapOptions}
       ref={chartComponentRef}
       {...props}
     />
