@@ -1,9 +1,5 @@
-import Dashboard from "@/components/dashboard";
+import { permanentRedirect } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-w-screen">
-      <Dashboard />
-    </div>
-  );
+  permanentRedirect(`/network-map`);
 }
